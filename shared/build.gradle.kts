@@ -1,6 +1,8 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization")
+    id("kotlinx-serialization")
 }
 
 kotlin {
@@ -25,8 +27,23 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+
+                // CACHE
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
                 implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
+
+                // LOG
+                implementation("co.touchlab:kermit:1.1.3")
+
+                // KTOR
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("io.ktor:ktor-client-core:2.2.3")
+                implementation("io.ktor:ktor-client-content-negotiation:2.2.3")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.3")
+                implementation("io.ktor:ktor-client-logging:2.2.3")
+                implementation("io.ktor:ktor-client-cio:2.2.3")
+                implementation("com.google.code.gson:gson:2.10")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
             }
         }
         val commonTest by getting {
@@ -36,7 +53,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-
+                implementation("io.ktor:ktor-client-okhttp:2.2.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
             }
         }
         val androidUnitTest by getting
@@ -49,7 +67,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-
+                implementation("io.ktor:ktor-client-darwin:2.2.3")
             }
         }
         val iosX64Test by getting
